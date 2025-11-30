@@ -35,6 +35,7 @@ export function BlockStart({ position = [0, 0, 0] }) {
 				scale={[4, 0.2, 4]}
 				receiveShadow
 			/>
+      <Floor/>
 		</group>
 	);
 }
@@ -72,6 +73,7 @@ export function BlockEnd({ position = [0, 0, 0] }) {
 			>
 				<primitive object={hamburger.scene} scale={0.2} />
 			</RigidBody>
+      <Floor/>
 		</group>
 	);
 }
@@ -114,6 +116,7 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 					receiveShadow
 				/>
 			</RigidBody>
+      <Floor/>
 		</group>
 	);
 }
@@ -157,8 +160,46 @@ export function BlockLimbo({ position = [0, 0, 0] }) {
 					receiveShadow
 				/>
 			</RigidBody>
+      <Floor/>
 		</group>
 	);
+}
+
+export function BlockLift({ position = [0, 0, 0] }) {
+  const obstacle = useRef();
+  const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    const t = Math.sin(time + timeOffset) + 0.9;
+    const y = t > -0.1 ? t : -0.1;
+
+    obstacle.current.setNextKinematicTranslation({
+      x: position[0],
+      y: position[1] + y,
+      z: position[2],
+    });
+  });
+
+  return (
+    <group position={position}>
+      <RigidBody
+        ref={obstacle}
+        type="kinematicPosition"
+        position={[0, 0.3, 0]}
+        restitution={0.2}
+        friction={0}
+      >
+        <mesh
+          geometry={boxGeometry}
+          material={floor2Material}
+          scale={[4, 0.2, 4]}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+    </group>
+  );
 }
 
 export function BlockAxe({ position = [0, 0, 0] }) {
@@ -200,13 +241,14 @@ export function BlockAxe({ position = [0, 0, 0] }) {
 					receiveShadow
 				/>
 			</RigidBody>
+      <Floor/>
 		</group>
 	);
 }
 
-function Bounds({ length = 1 }) {
+function Walls({ length = 1 }) {
 	return (
-			<RigidBody type="fixed" restitution={0.2} friction={0}>
+			<RigidBody type="fixed" colliders="cuboid" restitution={0.2} friction={0}>
 				<mesh
 					position={[2.15, 0.75, -(length * 2) + 2]}
 					geometry={boxGeometry}
@@ -228,10 +270,17 @@ function Bounds({ length = 1 }) {
 					scale={[4, 1.5, 0.3]}
 					receiveShadow
 				/>
+			</RigidBody>
+	);
+}
+
+function Floor() {
+	return (
+			<RigidBody type="fixed" restitution={0.2} friction={0}>
 				<CuboidCollider
 					type="fixed"
-					args={[2, 0.1, 2 * length]}
-					position={[0, -0.1, -(length * 2) + 2]}
+					args={[2, 0.1, 2]}
+					position={[0, -0.1, 0]}
 					restitution={0.2}
 					friction={1}
 				/>
@@ -239,9 +288,44 @@ function Bounds({ length = 1 }) {
 	);
 }
 
+// function Bounds({ length = 1 }) {
+// 	return (
+// 			<RigidBody type="fixed" restitution={0.2} friction={0}>
+// 				<mesh
+// 					position={[2.15, 0.75, -(length * 2) + 2]}
+// 					geometry={boxGeometry}
+// 					material={wallMaterial}
+// 					scale={[0.3, 1.5, 4 * length]}
+// 					castShadow
+// 				/>
+// 				<mesh
+// 					position={[-2.15, 0.75, -(length * 2) + 2]}
+// 					geometry={boxGeometry}
+// 					material={wallMaterial}
+// 					scale={[0.3, 1.5, 4 * length]}
+// 					receiveShadow
+// 				/>
+// 				<mesh
+// 					position={[0, 0.75, -(length * 4) + 2]}
+// 					geometry={boxGeometry}
+// 					material={wallMaterial}
+// 					scale={[4, 1.5, 0.3]}
+// 					receiveShadow
+// 				/>
+// 				<CuboidCollider
+// 					type="fixed"
+// 					args={[2, 0.1, 2 * length]}
+// 					position={[0, -0.1, -(length * 2) + 2]}
+// 					restitution={0.2}
+// 					friction={1}
+// 				/>
+// 			</RigidBody>
+// 	);
+// }
+
 export function Level({
 	count = 5,
-	types = [BlockSpinner, BlockAxe, BlockLimbo],
+	types = [BlockSpinner, BlockAxe, BlockLimbo, BlockLift],
 	seed = 0,
 }) {
 	const blocks = useMemo(() => {
@@ -264,8 +348,7 @@ export function Level({
 			))}
 
 			<BlockEnd position={[0, 0, -(count + 1) * 4]} />
-
-			<Bounds length={count + 2} />
+      <Walls length={count + 2}/>
 		</>
 	);
 }

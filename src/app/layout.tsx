@@ -9,7 +9,7 @@ const inclusiveSans = Inclusive_Sans({
 
 export const metadata: Metadata = {
   title: "briana's sketchbook",
-  description: "a collection of things i've made while attending recurse center",
+  description: "a collection of things i've made at recurse center",
 };
 
 export default function RootLayout({
