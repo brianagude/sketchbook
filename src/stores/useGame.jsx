@@ -1,54 +1,49 @@
-import { create } from 'zustand'
-import { subscribeWithSelector } from 'zustand/middleware'
+import { create } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
 
-export default create(subscribeWithSelector((set) =>
-{
+export default create(
+  subscribeWithSelector((set) => {
     return {
-        blocksCount: 10,
-        blocksSeed: 0,
-        
-        /**
-         * Time
-         */
-        startTime: 0,
-        endTime: 0,
+      blocksCount: 10,
+      blocksSeed: 0,
 
-        /**
-         * Phases
-         */
-        phase: 'ready',
+      /**
+       * Time
+       */
+      startTime: 0,
+      endTime: 0,
 
-        start: () =>
-        {
-            set((state) =>
-            {
-                if(state.phase === 'ready')
-                    return { phase: 'playing', startTime: Date.now() }
+      /**
+       * Phases
+       */
+      phase: "ready",
 
-                return {}
-            })
-        },
+      start: () => {
+        set((state) => {
+          if (state.phase === "ready")
+            return { phase: "playing", startTime: Date.now() };
 
-        restart: () =>
-        {
-            set((state) =>
-            {
-                if(state.phase === 'playing' || state.phase === 'ended')
-                    return { phase: 'ready', blocksSeed: Math.random() }
+          return {};
+        });
+      },
 
-                return {}
-            })
-        },
+      restart: () => {
+        set((state) => {
+          if (state.phase === "playing" || state.phase === "ended")
+            return { phase: "ready", blocksSeed: Math.random() };
 
-        end: () =>
-        {
-            set((state) =>
-            {
-                if(state.phase === 'playing')
-                    return { phase: 'ended', endTime: Date.now() }
+          return {};
+        });
+      },
 
-                return {}
-            })
-        }
-    }
-}))
+      end: () => {
+        set((state) => {
+          if (state.phase === "playing")
+            return { phase: "ended", endTime: Date.now() };
+
+          return {};
+        });
+      },
+    };
+  }),
+);

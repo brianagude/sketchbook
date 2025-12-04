@@ -19,9 +19,8 @@ export default function Model() {
 
   return (
     <>
-      <mesh ref={meshRef} geometry={boxGeometry} material={boxMaterial}/>
-      <mesh position={[0, -0.1, 0]}
-				scale={[4, 0.2, 4]}>
+      <mesh ref={meshRef} geometry={boxGeometry} material={boxMaterial} />
+      <mesh position={[0, -0.1, 0]} scale={[4, 0.2, 4]}>
         <boxGeometry />
         <meshStandardMaterial color="lightgreen" />
       </mesh>

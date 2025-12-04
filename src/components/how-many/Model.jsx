@@ -20,7 +20,7 @@ export default function Model() {
   // const marblesInJar = 0;
   // const marblesInJar = useGuessStore((state) => state.increaseTotalMarbles);
   // const totalMarblesCount = useGuessStore((state) => state.totalMarbles)
-  
+
   // const min = 400;
   // const max = 1200;
   // const marblesCount = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -45,7 +45,7 @@ export default function Model() {
 
   // const calculateBalls = () => {
   //   // marblesInJar = 0;
-    
+
   //   if (marbleRef.current) {
   //     const matrix = new THREE.Matrix4();
   //     const position = new THREE.Vector3();
@@ -203,12 +203,7 @@ export default function Model() {
       </RigidBody>
 
       {/* floor */}
-      <RigidBody 
-        type="fixed" 
-        position-y={-0.25} 
-        restitution={1}
-				friction={0.7}
-      >
+      <RigidBody type="fixed" position-y={-0.25} restitution={1} friction={0.7}>
         <mesh receiveShadow>
           <boxGeometry args={[20, 0.5, 20]} />
           <meshStandardMaterial color="greenyellow" />

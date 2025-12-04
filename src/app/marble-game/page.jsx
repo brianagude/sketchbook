@@ -9,7 +9,17 @@ export default function Page() {
   return (
     <main className="fixed inset-0 min-h-screen bg-[#bdedfc]">
       <div className="fixed z-10 text-black top-0 left-0 w-full p-4">
-        <p>based on the marble game from my <a href="https://threejs-journey.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">three js journey</a></p>
+        <p>
+          based on the marble game from my{" "}
+          <a
+            href="https://threejs-journey.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            three js journey
+          </a>
+        </p>
       </div>
       <KeyboardControls
         map={[

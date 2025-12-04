@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  transpilePackages: ['three'],
+  transpilePackages: ["three"],
 };
 
 export default nextConfig;

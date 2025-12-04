@@ -1,11 +1,21 @@
-import Link from "next/link"
-import { typography } from "@/styles/design-tokens"
+import Link from "next/link";
+import { typography } from "@/styles/design-tokens";
 
 export default function Page() {
   return (
     <main className="bg-blue-100 min-h-screen p-4">
       <h1 className="font-black">briana's sketchbook</h1>
-      <p>a collection of things i've made while at&nbsp;<a href="https://www.recurse.com/" target="_blank" rel="noopener noreferrer" className={typography.inlineLink}>RC</a></p>
+      <p>
+        a collection of things i've made while at&nbsp;
+        <a
+          href="https://www.recurse.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={typography.inlineLink}
+        >
+          RC
+        </a>
+      </p>
       {/* <small>(not optimized for mobile)</small> */}
       <nav className="mt-10 flex flex-col gap-5">
         <Link href="/butt-or-face" className={typography.menuLink}>
@@ -24,7 +34,14 @@ export default function Page() {
         {/* <Link href="/breaker-breaker" className={typography.menuLink}>
           <strike>bruno</strike> briana!
         </Link> */}
-        <a className={typography.menuLink} href="https://recurse-recipes-app.vercel.app/" target="_blank" rel="noopener noreferrer">recipes</a>
+        <a
+          className={typography.menuLink}
+          href="https://recurse-recipes-app.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          recipes
+        </a>
         <Link href="/how-many-marbles" className={typography.menuLink}>
           guessing game
         </Link>

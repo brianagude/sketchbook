@@ -43,7 +43,6 @@ export default function ButterStick({
 
         {/* Butter: Rounded box for nicer edges */}
         <group position={[0, 0.18, 0]}>
-          
           {/* <Text scale={ 0.5 }>Butter</Text> */}
           {/* <Text scale={ 0.5 }>Face</Text> */}
           <RoundedBox
