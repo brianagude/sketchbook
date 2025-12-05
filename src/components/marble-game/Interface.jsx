@@ -38,7 +38,7 @@ export default function Interface() {
   }, []);
 
   return (
-    <div className="interface">
+    <div className="marble-game-interface">
       {/* Time */}
       <div ref={time} className="time">
         0.00

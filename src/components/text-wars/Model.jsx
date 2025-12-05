@@ -27,7 +27,7 @@ function Letter(props) {
           metalness={0.8}
           reflectivity={0.9}
           iridescence={1}
-          transmission={1}
+          // transmission={1}
         />
         {/* <meshStandardMaterial color="hotpink" /> */}
       </Text3D>
