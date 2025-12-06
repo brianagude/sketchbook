@@ -16,7 +16,7 @@ export function BlockStart({ position = [0, 0, 0] }) {
     <group position={position}>
       <Float floatIntensity={0.25} rotationIntensity={0.25}>
         <Text
-          font="/bebas-neue-v9-latin-regular.woff"
+          font="/fonts/bebas-neue-v9-latin-regular.woff"
           scale={0.5}
           maxWidth={0.25}
           lineHeight={0.75}
@@ -41,7 +41,7 @@ export function BlockStart({ position = [0, 0, 0] }) {
 }
 
 export function BlockEnd({ position = [0, 0, 0] }) {
-  const hamburger = useGLTF("/hamburger.glb");
+  const hamburger = useGLTF("/models/hamburger.glb");
 
   hamburger.scene.children.forEach((mesh) => {
     mesh.castShadow = true;
@@ -50,7 +50,7 @@ export function BlockEnd({ position = [0, 0, 0] }) {
   return (
     <group position={position}>
       <Text
-        font="/bebas-neue-v9-latin-regular.woff"
+        font="/fonts/bebas-neue-v9-latin-regular.woff"
         scale={1}
         position={[0, 2.25, 2]}
       >

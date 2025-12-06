@@ -8,30 +8,37 @@ import * as THREE from 'three';
 function Letter(props) {
   return (
     <RigidBody position={props.position}>
-      <Text3D
-        font="./krona_one_reg.json"
-        size={1}
-        height={0.5}
-        curveSegments={12}
-        bevelEnabled
-        bevelThickness={0.02}
-        bevelSize={0.02}
-        bevelOffset={0}
-        bevelSegments={5}
-        receiveShadow
-      >
-        {props.letter}
-        <meshPhysicalMaterial
-          color="white"
-          roughness={0.16}
-          metalness={0.8}
-          reflectivity={0.9}
-          iridescence={1}
-          // transmission={1}
-        />
-        {/* <meshStandardMaterial color="hotpink" /> */}
-      </Text3D>
-    </RigidBody>
+  <Text3D
+    font="/fonts/krona_one_reg.json"
+    size={1}
+    height={0.5}
+    curveSegments={12}
+    bevelEnabled
+    bevelThickness={0.02}
+    bevelSize={0.02}
+    bevelOffset={0}
+    bevelSegments={5}
+    receiveShadow
+    castShadow
+  >
+    {props.letter}
+    <meshPhysicalMaterial
+      color="#e0f2ff"
+      roughness={0.05}
+      metalness={0}
+      transmission={1}
+      thickness={1}
+      ior={1.31}
+      transparent={true}
+      opacity={1}
+      clearcoat={1}
+      clearcoatRoughness={0.1}
+      iridescence={0.5}
+      iridescenceIOR={1.3}
+      iridescenceThicknessRange={[100, 400]}
+    />
+  </Text3D>
+</RigidBody>
   );
 }
 
@@ -77,7 +84,11 @@ export default function Model() {
       <RigidBody type="fixed" position-y={-0.25} restitution={1} friction={0.7}>
         <mesh receiveShadow>
           <boxGeometry args={[20, 0.5, 20]} />
-          <meshStandardMaterial color="midnightblue" />
+          <meshStandardMaterial 
+            color="#0f172a" 
+            roughness={0.1}
+            metalness={0.8}
+          />
         </mesh>
       </RigidBody>
     </>

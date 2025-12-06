@@ -28,7 +28,7 @@ export default function ButterStick({
           scale={0.4}
           position={ [ -1, 1, 0 ] }
           rotation-y={ 0.25 }
-          font="/InclusiveSans-Regular.ttf"
+          font="/fonts/InclusiveSans-Regular.ttf"
         >
           BUTTER
         </Text>

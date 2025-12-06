@@ -7,7 +7,7 @@ import Scene from "@/components/text-wars/Scene.jsx";
 
 export default function Home() {
   return (
-    <main className="fixed inset-0 min-h-screen bg-black">
+    <main className="fixed inset-0 min-h-screen bg-blue-100">
       <div className="fixed z-10 text-black top-0 left-0 w-full p-4">
         <p>start typing...</p>
       </div>
@@ -45,10 +45,10 @@ export default function Home() {
         <Canvas
           shadows
           camera={{
-            fov: 45,
+            fov: 50,
             near: 0.1,
             far: 200,
-            position: [10, 12, 6],
+            position: [15, 8, 0],
           }}
         >
           <Scene />
