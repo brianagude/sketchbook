@@ -1,60 +1,88 @@
 import { create } from "zustand";
-import { getRandomWord } from "@/data/words"
+import { getRandomWord } from "@/data/words";
 
-export const useHangman = create((set) => ({
+export const useHangman = create((set, get) => ({
   word: '',
   difficulty: '',
   category: '',
   guesses: [],
   correctGuesses: [],
-  strikes: 0,
   droppedLetters: [],
-  snowCount: 1000,
+  strikes: 0,
+  maxStrikes: 5,
   phase: "ready",
 
-  increaseSnowCount: () => set((state) => ({ snowCount: state.snowCount + 1000 })),
-  addDroppedLetters: (letter) => set((state) => ({ droppedLetters: [...state.droppedLetters, letter] })),
-  increaseStrikes: () => set((state) => ({ strikes: state.strikes + 1 })),
-  addGuess: (letter) => set((state) => ({ guesses: [...state.guesses, letter] })),
-  generateWord: () => {
-    const { word, difficulty, category } = getRandomWord();
-    set({ word, difficulty, category });
+  getUniqueLetters: () => {
+    const { word } = get();
+    if (!word) return new Set();
+    return new Set(word.toLowerCase().replace(/\s/g, '').split(''));
+  },
+
+  checkWin: () => {
+    const { correctGuesses, getUniqueLetters, phase } = get();
+    if (phase !== "playing") return;
+    
+    const uniqueLetters = getUniqueLetters();
+    const correctSet = new Set(correctGuesses);
+    
+    if (uniqueLetters.size > 0 && uniqueLetters.size === correctSet.size) {
+      set({ phase: "won" });
+    }
+  },
+
+  addDroppedLetter: (letter) => 
+    set((state) => ({ 
+      droppedLetters: [...state.droppedLetters, letter] 
+    })),
+
+  addGuess: (letter) => {
+    const { phase, guesses, word } = get();
+    
+    if (phase !== "playing") return;
+    if (guesses.includes(letter)) return;
+
+    const isCorrect = word.toLowerCase().includes(letter.toLowerCase());
+    
+    set((state) => ({
+      guesses: [...state.guesses, letter],
+      correctGuesses: isCorrect 
+        ? [...state.correctGuesses, letter] 
+        : state.correctGuesses,
+      strikes: isCorrect ? state.strikes : state.strikes + 1
+    }));
+
+    setTimeout(() => get().checkWin(), 0);
   },
 
   /* PHASES */
-  start: () => {
-    set((state) => {
-      if (state.phase === "ready") {
-        const { word, difficulty, category } = getRandomWord();
-        return { 
-          phase: "playing",
-          word,
-          difficulty,
-          category,
-          strikes: 0,
-          snowCount: 1000,
-          guesses: [],
-          correctGuesses: [],
-          droppedLetters: [],
-        };
-      }
-      return {};
+  start: (category, difficulty) => {
+    const state = get();
+    if (state.phase !== "ready") return;
+
+    const { word } = getRandomWord(category, difficulty);
+    set({ 
+      phase: "playing",
+      word,
+      difficulty,
+      category,
+      strikes: 0,
+      guesses: [],
+      correctGuesses: [],
+      droppedLetters: [],
     });
   },
 
   restart: () => {
-    set((state) => {
-      if (state.phase === "playing" || state.phase === "ended")
-        return { phase: "ready" };
-      return {};
-    });
+    const { phase } = get();
+    if (phase === "playing" || phase === "ended" || phase === "won") {
+      set({ phase: "ready" });
+    }
   },
 
   end: () => {
-    set((state) => {
-      if (state.phase === "playing")
-        return { phase: "ended" };
-      return {};
-    });
+    const { phase, strikes, maxStrikes } = get();
+    if (phase === "playing" && strikes >= maxStrikes) {
+      set({ phase: "ended" });
+    }
   },
 }))

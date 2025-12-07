@@ -8,7 +8,7 @@ import Scene from "@/components/hangman/Scene.jsx";
 
 export default function Home() {
   return (
-    <main className="fixed inset-0 min-h-screen">
+    <main className="fixed inset-0 min-h-screen bg-[#878891]">
       <KeyboardControls
         map={[
           { name: "a", keys: ["a"] },
@@ -43,7 +43,7 @@ export default function Home() {
         <Canvas
           shadows
           camera={{
-            position: [15, 8, 0],
+            position: [5, 12, 5],
           }}
         >
           <Scene />

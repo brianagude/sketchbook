@@ -7,3 +7,7 @@ export const howMany = {
   number: `aspect-square flex items-center justify-center bg-white/30 border-black rounded-md cursor-pointer hover:bg-white/60 transition-colors`,
   input: `w-full px-2 py-3 bg-white/30 border-black rounded-md text-4xl`,
 };
+
+export const hangman = {
+  button: `w-full bg-black text-white py-2 px-4 rounded-md flex items-center justify-center hover:bg-purple-800 cursor-pointer`,
+}
