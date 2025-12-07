@@ -44,7 +44,6 @@ export default function Model() {
         const letter = keyToLetter[key];
         
         const newLetter = {
-          id: `${Date.now()}-${Math.random()}`,
           letter: letter,
           position: [Math.random() * 10 - 5, 10, Math.random() * 10 - 5],
         };
@@ -61,8 +60,9 @@ export default function Model() {
 
   return (
     <>
-      {droppedLetters.map((item) => (
-        <Letter key={item.id} position={item.position} letter={item.letter} />
+      {droppedLetters.map((item, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: word letters never reorder
+        <Letter key={`item.letter-${i}`} position={item.position} letter={item.letter} />
       ))}
 
       {phase === "ended" && (
