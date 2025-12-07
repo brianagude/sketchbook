@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { RigidBody, useRapier } from "@react-three/rapier";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import marbleGame from "@/stores/marbleGame.jsx";
+import useGame from "@/stores/marbleGame.jsx";
 
 export default function Player() {
   const body = useRef();
@@ -14,10 +14,10 @@ export default function Player() {
     () => new THREE.Vector3(10, 10, 10),
   );
   const [smoothedCameraTarget] = useState(() => new THREE.Vector3());
-  const start = marbleGame((state) => state.start);
-  const end = marbleGame((state) => state.end);
-  const restart = marbleGame((state) => state.restart);
-  const blocksCount = marbleGame((state) => state.blocksCount);
+  const start = useGame((state) => state.start);
+  const end = useGame((state) => state.end);
+  const restart = useGame((state) => state.restart);
+  const blocksCount = useGame((state) => state.blocksCount);
 
   const jump = () => {
     const origin = body.current.translation();
@@ -38,7 +38,7 @@ export default function Player() {
   };
 
   useEffect(() => {
-    const unsubscribeReset = marbleGame.subscribe(
+    const unsubscribeReset = useGame.subscribe(
       (state) => state.phase,
       (value) => {
         if (value === "ready") reset();
