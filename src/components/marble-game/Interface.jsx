@@ -1,13 +1,13 @@
 import { useKeyboardControls } from "@react-three/drei";
 import { addEffect } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import useGame from "@/stores/useGame.jsx";
+import marbleGame from "@/stores/marbleGame.jsx";
 
 export default function Interface() {
   const time = useRef();
 
-  const restart = useGame((state) => state.restart);
-  const phase = useGame((state) => state.phase);
+  const restart = marbleGame((state) => state.restart);
+  const phase = marbleGame((state) => state.phase);
 
   // just pull out what you need rather than the entire object
   const forward = useKeyboardControls((state) => state.forward);
@@ -18,7 +18,7 @@ export default function Interface() {
 
   useEffect(() => {
     const unsubscribeEffect = addEffect(() => {
-      const state = useGame.getState();
+      const state = marbleGame.getState();
 
       let elapsedTime = 0;
 

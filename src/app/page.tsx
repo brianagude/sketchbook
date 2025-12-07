@@ -45,8 +45,8 @@ export default function Page() {
         <Link href="/how-many-marbles" className={typography.menuLink}>
           guessing game
         </Link>
-        <Link href="/text-wars" className={typography.menuLink}>
-          text wars
+        <Link href="/hangman" className={typography.menuLink}>
+          hangman
         </Link>
       </nav>
     </main>

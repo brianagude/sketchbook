@@ -1,4 +1,4 @@
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
 import Model from "./Model.jsx";
 
@@ -11,7 +11,6 @@ export default function Scene() {
       <Environment
         files="/env-maps/mud_road_puresky_4k.hdr"
         background
-        ground
       />
       <directionalLight
         castShadow
@@ -19,7 +18,7 @@ export default function Scene() {
         intensity={4.5}
       />
       <Model />
-      <OrbitControls />
+      {/* <OrbitControls /> */}
     </Physics>
   );
 }

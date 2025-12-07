@@ -1,12 +1,12 @@
 import { Physics } from "@react-three/rapier";
-import useGame from "@/stores/useGame.jsx";
+import marbleGame from "@/stores/marbleGame.jsx";
 import { Level } from "./Level.jsx";
 import Lights from "./Lights.jsx";
 import Player from "./Player.jsx";
 
 export default function Experience() {
-  const blocksCount = useGame((state) => state.blocksCount);
-  const blocksSeed = useGame((state) => state.blocksSeed);
+  const blocksCount = marbleGame((state) => state.blocksCount);
+  const blocksSeed = marbleGame((state) => state.blocksSeed);
 
   return (
     <>
