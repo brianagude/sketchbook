@@ -1,6 +1,6 @@
 "use client";
 
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
 import { useRef } from "react";
 import Model from "./Model.jsx";
@@ -18,7 +18,8 @@ export default function Scene() {
         intensity={4.5}
       />
       <Model />
-      <OrbitControls />
+      <PerspectiveCamera makeDefault position={[10, 25, 10]} />
+      <OrbitControls target={[0, 5, 0]} />
     </Physics>
   );
 }

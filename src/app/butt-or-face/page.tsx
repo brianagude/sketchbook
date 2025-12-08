@@ -5,7 +5,6 @@ import ButterStick from "@/components/ButterStick";
 export default function Page() {
   return (
     <main className="bg-blue-100">
-      {/* <color args={ [ '#bdedfc' ] } attach="background" /> */}
       <div className="fixed z-10 text-black top-0 left-0 w-full p-4">
         <p>
           phonetically inspired by a{" "}

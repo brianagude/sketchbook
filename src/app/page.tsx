@@ -18,6 +18,11 @@ export default function Page() {
       </p>
       {/* <small>(not optimized for mobile)</small> */}
       <nav className="mt-10 flex flex-col gap-5">
+        {process.env.NODE_ENV === "development" && 
+          <Link href="/brain-dump" className={typography.menuLink}>
+            brain dump
+          </Link>
+        }
         <Link href="/butt-or-face" className={typography.menuLink}>
           butt or face
           {/* <span className="bg-blue-500 h-5 w-5 rounded-full opacity-0 transition-all block group-hover:opacity-100 md:w-10 md:h-10"></span> */}
