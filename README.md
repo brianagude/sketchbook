@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# R3F Starter
 
-## Getting Started
+An **opinionated** React Three Fiber starter template built on Next.js. This is a learning project that will evolve as I explore new R3F patterns and techniques.
 
-First, run the development server:
+> ⚠️ **Note**: This starter reflects my current understanding and preferences. As I learn new things in React Three Fiber, the structure, patterns, and choices here will be updated accordingly.
+
+## What's This?
+
+A 3D web application starter that combines Next.js with React Three Fiber for building interactive 3D experiences. The setup includes physics simulation, lighting controls, performance monitoring, and debugging tools.
+
+## Tech Stack
+
+### Core
+
+- **Next.js 16** (App Router)
+- **React Three Fiber** - React renderer for Three.js
+- **React Three Rapier** - Physics engine wrapper
+- **Drei** - Helpful R3F utilities
+- **Three.js** - 3D library
+
+### Development Tools
+
+- **Leva** - Interactive GUI controls for debugging
+- **r3f-perf** - Performance monitor overlay
+- **Biome** - Fast formatter/linter
+- **Zustand** - State management (available but not currently used)
+
+### Styling
+
+- **Tailwind CSS v4** - Utility-first CSS
+- **TypeScript** - Type safety (with JSX support)
+
+## Scripts
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm dev      # Development server
+pnpm build    # Production build
+pnpm start    # Production server
+pnpm lint     # Lint with Biome
+pnpm format   # Format with Biome
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+See `package.json` for full dependency list. Key packages:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `@react-three/fiber` - React renderer for Three.js
+- `@react-three/rapier` - Physics simulation
+- `@react-three/drei` - R3F utilities and helpers
+- `leva` - GUI controls for runtime tweaking
+- `r3f-perf` - Performance monitoring
+- `three` - Three.js core library
 
-## Learn More
+## Key Concepts
 
-To learn more about Next.js, take a look at the following resources:
+This starter uses common R3F patterns:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- React components for Three.js objects
+- `useFrame` for animations
+- Physics via Rapier
+- Leva controls for interactive debugging
+- Performance monitoring overlay
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Check the code to see how these are implemented.
 
-## Deploy on Vercel
+## Resources
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [React Three Fiber Docs](https://docs.pmnd.rs/react-three-fiber)
+- [Drei Documentation](https://github.com/pmndrs/drei)
+- [React Three Rapier](https://github.com/pmndrs/react-three-rapier)
+- [Three.js Docs](https://threejs.org/docs/)
+- [Leva Controls](https://github.com/pmndrs/leva)
