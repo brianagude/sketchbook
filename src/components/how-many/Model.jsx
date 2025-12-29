@@ -1,5 +1,6 @@
 "use client";
 
+import { useTexture } from "@react-three/drei";
 import {
   CuboidCollider,
   InstancedRigidBodies,
@@ -18,6 +19,8 @@ export default function Model() {
   const wallHeight = 13;
   const wallLength = 13;
   const marbleRadius = wallLength / 20;
+
+  const palette = ['#F2BAC9', '#F1D302', '#5DB7DE', '#CC5803', '#134611']
 
   // Generate random count once
   const marblesCount = useMemo(() => {
@@ -52,16 +55,37 @@ export default function Model() {
   useEffect(() => {
     if (marbleRef.current) {
       for (let i = 0; i < marblesCount; i++) {
-        const color = new THREE.Color(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        marbleRef.current.setColorAt(i, color);
+        // const color = new THREE.Color(
+        //   Math.random(),
+        //   Math.random(),
+        //   Math.random(),
+        // );
+        // marbleRef.current.setColorAt(i, color);
+        marbleRef.current.setColorAt(i, new THREE.Color(palette[Math.floor(Math.random() * palette.length)]))
       }
       marbleRef.current.instanceColor.needsUpdate = true;
     }
   }, [marblesCount]);
+
+  // Floor texture map
+  const floorTexture = useTexture(
+    {
+      map: '/textures/wood_table_arm_1k.jpg',
+      displacementMap: '/textures/wood_table_arm_1k.jpg',
+      normalMap: '/textures/wood_table_arm_1k.jpg',
+      roughnessMap: '/textures/wood_table_arm_1k.jpg',
+      aoMap: '/textures/wood_table_arm_1k.jpg',
+      metalnessMap: '/textures/wood_table_arm_1k.jpg',
+    },
+    (textures) => {
+      Object.values(textures).forEach((texture) => {
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(10, 10);
+        texture.colorSpace = THREE.SRGBColorSpace;
+      });
+    }
+  );
 
   return (
     <>
@@ -78,11 +102,13 @@ export default function Model() {
           ref={marbleRef}
         >
           <sphereGeometry args={[marbleRadius, 32, 16]} />
-          <meshStandardMaterial roughness={0} metalness={0.5} />
+          <meshPhysicalMaterial transmission={0.9} thickness={0.5} roughness={0.05} />
+          {/* <meshStandardMaterial transparent opacity={0.9} roughness={0.05} metalness={0.5} /> */}
+
         </instancedMesh>
       </InstancedRigidBodies>
 
-      {/* Container - same as yours */}
+      {/* Container */}
       <RigidBody
         colliders={false}
         mass={1}
@@ -107,58 +133,65 @@ export default function Model() {
         />
 
         {/* Visual walls */}
-        <mesh position={[0, 0, -wallLength / 2 + wallThickness / 2]}>
-          <planeGeometry args={[wallLength, wallHeight]} />
-          <meshStandardMaterial
-            transparent
-            opacity={0.3}
-            color="pink"
+        {/* Back wall */}
+        <mesh position={[0, 0, -wallLength / 2]}>
+          {/* <planeGeometry args={[wallLength, wallHeight]} /> */}
+          {/* <meshStandardMaterial transparent opacity={0.3} color="white" side={2} /> */}
+          <boxGeometry args={[wallLength, wallHeight, 0.1]} />
+          <meshStandardMaterial 
+            transparent 
+            opacity={0.15}
+            roughness={0.05}
+            metalness={0}
             side={2}
-          />
-        </mesh>
-        <mesh position={[0, 0, wallLength / 2 + wallThickness / 2]}>
-          <planeGeometry args={[wallLength, wallHeight]} />
-          <meshStandardMaterial
-            transparent
-            opacity={0.3}
-            color="orange"
-            side={2}
-          />
-        </mesh>
-        <mesh
-          position={[-wallLength / 2 + wallThickness / 2, 0, 0]}
-          rotation-y={Math.PI / 2}
-        >
-          <planeGeometry args={[wallLength, wallHeight]} />
-          <meshStandardMaterial
-            transparent
-            opacity={0.3}
-            color="green"
-            side={2}
-          />
-        </mesh>
-        <mesh
-          position={[wallLength / 2 + wallThickness / 2, 0, 0]}
-          rotation-y={Math.PI / 2}
-        >
-          <planeGeometry args={[wallLength, wallHeight]} />
-          <meshStandardMaterial
-            transparent
-            opacity={0.3}
-            color="blue"
-            side={2}
-          />
-        </mesh>
-        <mesh
-          position={[0, -wallHeight / 2 + 0.01, 0]}
-          rotation-x={Math.PI / 2}
-        >
-          <planeGeometry args={[wallLength, wallLength]} />
-          <meshStandardMaterial
-            transparent
-            opacity={0.3}
             color="white"
+          />
+
+          {/* <meshPhysicalMaterial 
+            transmission={1} 
+            thickness={0.05} 
+            roughness={0.1}
             side={2}
+            color="white"
+          /> */}
+        </mesh>
+
+        {/* Front wall */}
+        <mesh position={[0, 0, wallLength / 2]}>
+          <boxGeometry args={[wallLength, wallHeight, 0.1]} />
+          <meshStandardMaterial 
+            transparent 
+            opacity={0.15}
+            roughness={0.05}
+            metalness={0}
+            side={2}
+            color="white"
+          />
+        </mesh>
+
+        {/* Left wall */}
+        <mesh position={[-wallLength / 2, 0, 0]} rotation-y={Math.PI / 2}>
+          <boxGeometry args={[wallLength, wallHeight, 0.1]} />
+          <meshStandardMaterial 
+            transparent 
+            opacity={0.15}
+            roughness={0.05}
+            metalness={0}
+            side={2}
+            color="white"
+          />
+        </mesh>
+
+        {/* Right wall */}
+        <mesh position={[wallLength / 2, 0, 0]} rotation-y={Math.PI / 2}>
+          <boxGeometry args={[wallLength, wallHeight, 0.1]} />
+          <meshStandardMaterial 
+            transparent 
+            opacity={0.15}
+            roughness={0.05}
+            metalness={0}
+            side={2}
+            color="white"
           />
         </mesh>
       </RigidBody>
@@ -166,8 +199,12 @@ export default function Model() {
       {/* floor */}
       <RigidBody type="fixed" position-y={-0.25} restitution={1} friction={0.7}>
         <mesh receiveShadow>
-          <boxGeometry args={[40, 2, 40]} />
-          <meshStandardMaterial color="greenyellow" />
+          <boxGeometry args={[40, 0.5, 40]} />
+          <meshStandardMaterial 
+            {...floorTexture}
+            displacementScale={0}
+            color="#3d2817"
+          />
         </mesh>
       </RigidBody>
     </>

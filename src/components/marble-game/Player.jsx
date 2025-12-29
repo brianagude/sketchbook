@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/correctness/useExhaustiveDependencies: just for fun */
-import { useKeyboardControls } from "@react-three/drei";
+import { useGLTF, useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody, useRapier } from "@react-three/rapier";
 import { useEffect, useRef, useState } from "react";
@@ -18,6 +18,12 @@ export default function Player() {
   const end = useGame((state) => state.end);
   const restart = useGame((state) => state.restart);
   const blocksCount = useGame((state) => state.blocksCount);
+
+  const ball = useGLTF("/models/planet.glb");
+
+  ball.scene.children.forEach((mesh) => {
+    mesh.castShadow = true;
+  });
 
   const jump = () => {
     const origin = body.current.translation();
@@ -122,7 +128,6 @@ export default function Player() {
      * Phases
      */
     if (bodyPosition.z < -(blocksCount * 4 + 2)) end();
-
     if (bodyPosition.y < -4) restart();
   });
 
@@ -136,11 +141,15 @@ export default function Player() {
       linearDamping={0.5}
       angularDamping={0.5}
       position={[0, 1, 0]}
+      scale={0.2}
     >
-      <mesh castShadow>
-        <icosahedronGeometry args={[0.3, 1]} />
-        <meshStandardMaterial flatShading color="mediumpurple" />
-      </mesh>
+      <primitive object={ball.scene} />
+      {/* 
+        <mesh castShadow>
+          <icosahedronGeometry args={[0.3, 1]} />
+          <meshStandardMaterial flatShading color="mediumpurple" />
+        </mesh> 
+      */}
     </RigidBody>
   );
 }

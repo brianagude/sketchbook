@@ -10,7 +10,7 @@ export default function Experience() {
 
   return (
     <>
-      <color args={["#bdedfc"]} attach="background" />
+      {/* <color args={["#050E3C"]} attach="background" /> */}
 
       <Physics debug={false}>
         <Lights />

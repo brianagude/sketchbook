@@ -4,11 +4,11 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { useControls } from "leva";
-import Link from "next/link";
 import { Perf } from "r3f-perf";
 import { StrictMode, Suspense } from "react";
 import Lights from "@/components/brain-dump/Lights";
 import World from "@/components/brain-dump/World";
+import Header from "@/components/Header";
 
 export default function Page() {
   const { bgColor, orbitContorls } = useControls({
@@ -18,6 +18,7 @@ export default function Page() {
 
   return (
     <main className="w-screen h-screen">
+      <Header/>
       <StrictMode>
         {/* <Leva theme={levaTheme} /> */}
         <Canvas
@@ -37,7 +38,6 @@ export default function Page() {
           <OrbitControls enabled={orbitContorls} makeDefault />
         </Canvas>
       </StrictMode>
-      <Link href="/" className="fixed z-10 bottom-4 right-4 underline text-white hover:opacity-50">Home</Link>
     </main>
   );
 }

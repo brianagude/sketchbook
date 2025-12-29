@@ -1,15 +1,15 @@
-import { Float, Text, useGLTF } from "@react-three/drei";
+import { Float, Text, useAnimations, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 
-const floor1Material = new THREE.MeshStandardMaterial({ color: "limegreen" });
-const floor2Material = new THREE.MeshStandardMaterial({ color: "greenyellow" });
-const obstacleMaterial = new THREE.MeshStandardMaterial({ color: "orangered" });
-const wallMaterial = new THREE.MeshStandardMaterial({ color: "slategrey" });
+const floor1Material = new THREE.MeshStandardMaterial({ color: "#E2DDB4" });
+const floor2Material = new THREE.MeshStandardMaterial({ color: "#F6EFD2" });
+const obstacleMaterial = new THREE.MeshStandardMaterial({ color: "#FF3838" });
+const wallMaterial = new THREE.MeshStandardMaterial({ color: "#002455" });
 
 export function BlockStart({ position = [0, 0, 0] }) {
   return (
@@ -24,8 +24,8 @@ export function BlockStart({ position = [0, 0, 0] }) {
           position={[0.75, 0.65, 0]}
           rotation-y={-0.25}
         >
-          Marble Race
-          <meshBasicMaterial toneMapped={false} />
+          Let's Race!
+          <meshBasicMaterial toneMapped={false} color="#F9F8F0" />
         </Text>
       </Float>
       <mesh
@@ -41,11 +41,22 @@ export function BlockStart({ position = [0, 0, 0] }) {
 }
 
 export function BlockEnd({ position = [0, 0, 0] }) {
-  const hamburger = useGLTF("/models/hamburger.glb");
+  const endModelRef = useRef();
+  const endModel = useGLTF("/models/flamingo.glb");
 
-  hamburger.scene.children.forEach((mesh) => {
+  endModel.scene.children.forEach((mesh) => {
     mesh.castShadow = true;
   });
+
+  const animations = useAnimations(endModel.animations, endModelRef);
+  console.log(animations);
+
+  useEffect(() => {
+    animations.actions["RobotArmature|Dance"]?.play();
+  }, [animations]);
+
+  // console.log(endModel);
+  // console.log(endModelRef);
 
   return (
     <group position={position}>
@@ -70,8 +81,9 @@ export function BlockEnd({ position = [0, 0, 0] }) {
         position={[0, 0.25, 0]}
         restitution={0.2}
         friction={0}
+        scale={0.3}
       >
-        <primitive object={hamburger.scene} scale={0.2} />
+        <primitive object={endModel.scene} ref={endModelRef} />
       </RigidBody>
       <Floor />
     </group>

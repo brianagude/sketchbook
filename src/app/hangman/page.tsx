@@ -2,13 +2,14 @@
 
 import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import Link from "next/link";
+import Header from "@/components/Header";
 import Interface from "@/components/hangman/Interface";
 import Scene from "@/components/hangman/Scene.jsx";
 
 export default function Home() {
   return (
     <main className="fixed inset-0 min-h-screen bg-[#878891]">
+      <Header />
       <KeyboardControls
         map={[
           { name: "a", keys: ["a"] },
@@ -50,12 +51,6 @@ export default function Home() {
         </Canvas>
         <Interface />
       </KeyboardControls>
-      <Link
-        href="/"
-        className="fixed z-10 bottom-4 right-4 text-black hover:underline"
-      >
-        Home
-      </Link>
     </main>
   );
 }
