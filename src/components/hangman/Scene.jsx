@@ -3,8 +3,6 @@ import { Physics } from "@react-three/rapier";
 import Model from "./Model.jsx";
 
 export default function Scene() {
-  
-
   return (
     <Physics debug={false}>
       <ambientLight />

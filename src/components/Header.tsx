@@ -18,10 +18,10 @@ export default function Header({ mode = "light" }) {
   return (
     <header className="fixed bottom-0 left-0 w-full p-2 z-50">
       <div
-        className={`flex justify-between w-full py-2 px-6 rounded-lg ${mode === "dark" ? "liquid-glass-dark" : "liquid-glass"}`}
+        className={`flex flex-col w-full py-2 px-6 gap-3 rounded-lg shadow-md lg:flex-row lg:justify-between ${mode === "dark" ? "liquid-glass-dark" : "liquid-glass"}`}
       >
         <h1 className="font-black">briana's sketchbook</h1>
-        <nav className="flex gap-4">
+        <nav className="flex gap-x-4 gap-y-1 flex-wrap">
           {links.map((link) => {
             const isActive = pathname === link.href
             

@@ -6,13 +6,14 @@ export const typography = {
 
 export const howMany = {
   number: `aspect-square flex items-center justify-center bg-white/30 border-black rounded-md cursor-pointer hover:bg-white/60 transition-colors`,
-  input: `w-full px-4 py-3 bg-white border-black text-black rounded-md text-lg`,
+  input: `w-full px-4 py-3 bg-white border-black text-black rounded-md text-lg hover:cursor-pointer`,
   button: `w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 font-semibold transition`,
   label: `uppercase text-sm`
 };
 
 export const hangman = {
-  button: `w-full bg-black text-white py-2 px-4 rounded-md flex items-center justify-center hover:bg-purple-800 cursor-pointer`,
+  button: `w-full bg-black text-white py-2 px-4 rounded-md flex items-center justify-center hover:bg-gray-800 cursor-pointer`,
+  buttonGhost: `w-full bg-transparent text-black border-2 py-2 px-4 rounded-md flex items-center justify-center hover:bg-gray-200 cursor-pointer`,
 }
 
 export const levaTheme = {

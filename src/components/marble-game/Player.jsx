@@ -27,13 +27,15 @@ export default function Player() {
 
   const jump = () => {
     const origin = body.current.translation();
-    origin.y -= 0.31;
+    origin.y -= 0.5;
     const direction = { x: 0, y: -1, z: 0 };
     const ray = new rapier.Ray(origin, direction);
     const hit = world.castRay(ray, 10, true);
 
+    console.log('hit:', hit, 'timeOfImpact:', hit?.timeOfImpact);
+
     if (hit.timeOfImpact < 0.15) {
-      body.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
+      body.current.applyImpulse({ x: 0, y: 1, z: 0 });
     }
   };
 
@@ -144,12 +146,6 @@ export default function Player() {
       scale={0.2}
     >
       <primitive object={ball.scene} />
-      {/* 
-        <mesh castShadow>
-          <icosahedronGeometry args={[0.3, 1]} />
-          <meshStandardMaterial flatShading color="mediumpurple" />
-        </mesh> 
-      */}
     </RigidBody>
   );
 }

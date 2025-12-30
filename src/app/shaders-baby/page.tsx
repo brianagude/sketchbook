@@ -6,9 +6,9 @@ import { Physics } from "@react-three/rapier";
 import { useControls } from "leva";
 import { Perf } from "r3f-perf";
 import { StrictMode, Suspense } from "react";
-import Lights from "@/components/brain-dump/Lights";
-import World from "@/components/brain-dump/World";
 import Header from "@/components/Header";
+import Lights from "@/components/shaders-baby/Lights";
+import World from "@/components/shaders-baby/World";
 
 export default function Page() {
   const { bgColor, orbitContorls } = useControls({
@@ -18,7 +18,7 @@ export default function Page() {
 
   return (
     <main className="w-screen h-screen">
-      <Header/>
+      <Header />
       <StrictMode>
         {/* <Leva theme={levaTheme} /> */}
         <Canvas
