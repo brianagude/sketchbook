@@ -1,20 +1,30 @@
 import { useGLTF, useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState} from "react";
 import * as THREE from "three";
 
 export default function Car() {
+  const [smoothedCameraTarget] = useState(() => new THREE.Vector3());
+  const [smoothedCameraPosition] = useState(
+    () => new THREE.Vector3(10, 10, 10),
+  );
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const carRef = useRef();
   const car = useGLTF("/models/jeep.glb");
 
   console.log('car: ', car);
 
-  // Add a ref outside useFrame to track rolling distance consistently
+  const reset = () => {
+    carRef.current.setTranslation({ x: 0, y: 1, z: 0 });
+    carRef.current.setLinvel({ x: 0, y: 0, z: 0 });
+    carRef.current.setAngvel({ x: 0, y: 0, z: 0 });
+  };
+
   const rollRef = useRef(0);
 
   useFrame((state, delta) => {
+    console.log(carRef)
     const { forward, backward, leftward, rightward } = getKeys();
 
     const impulseStrength = 15 * delta;
@@ -68,7 +78,40 @@ export default function Car() {
       wheel.rotation.set(0, 0, 0);
       wheel.rotateX(rollRef.current);
     });
-  });
+
+    // // Make camera follow car
+    // const carPosition = carRef.current.translation(); // Get car's position from RigidBody
+    // state.camera.position.set(
+    //   carPosition.x,
+    //   carPosition.y + 4,  // Height above car
+    //   carPosition.z + 6  // Distance behind car
+    // );
+    
+    // // Make camera look at car
+    // state.camera.lookAt(carPosition.x, carPosition.y, carPosition.z);
+
+    /**
+     * Camera
+     */
+      const carPosition = carRef.current.translation();
+
+      const cameraPosition = new THREE.Vector3();
+      cameraPosition.copy(carPosition);
+      cameraPosition.z += 2;
+      cameraPosition.y += 2;
+      cameraPosition.x += 5;
+
+      const cameraTarget = new THREE.Vector3();
+      cameraTarget.copy(carPosition);
+      cameraTarget.y += 0.3;
+
+      smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
+      smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
+
+      state.camera.position.copy(smoothedCameraPosition);
+      state.camera.lookAt(smoothedCameraTarget);
+      if (carPosition.y < -6) reset();
+    });
 
   useEffect(() => {
     car.scene.traverse((child) => {
@@ -84,7 +127,7 @@ export default function Car() {
       canSleep={false} 
       colliders="hull"
       linearDamping={1}
-      angularDamping={0.5}
+      angularDamping={1}
     >
       <primitive object={car.scene} />
     </RigidBody>

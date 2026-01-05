@@ -51,7 +51,7 @@ export default function Page() {
                 <World />
               </Physics>
             </Suspense>
-            <OrbitControls makeDefault />
+            <OrbitControls makeDefault enabled={false} />
           </Canvas>
         </KeyboardControls>
       </StrictMode>

@@ -1,5 +1,5 @@
 export const links = [
-  { href: '/playground', label: 'playground', hidden: true },
+  { href: '/playground', label: 'playground' },
   { href: '/marble-game', label: 'planet race' },
   { href: '/how-many-marbles', label: 'marbles' },
   { href: '/hangman', label: 'hangman' },
