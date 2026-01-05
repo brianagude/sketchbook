@@ -3,7 +3,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
-import { useControls } from "leva";
+import { Leva, useControls } from "leva";
 import { Perf } from "r3f-perf";
 import { StrictMode, Suspense } from "react";
 import Lights from "@/components/brain-dump/Lights";
@@ -18,7 +18,8 @@ export default function Page() {
 
   return (
     <main className="w-screen h-screen">
-      <Header/>
+      <Header />
+      <Leva collapsed />
       <StrictMode>
         {/* <Leva theme={levaTheme} /> */}
         <Canvas
@@ -28,7 +29,9 @@ export default function Page() {
           }}
         >
           <color args={[bgColor]} attach="background" />
-          <Perf position="top-left" />
+          {process.env.NODE_ENV === "development" && (
+            <Perf position="top-left" />
+          )}
           <Lights />
           <Suspense>
             <Physics debug>

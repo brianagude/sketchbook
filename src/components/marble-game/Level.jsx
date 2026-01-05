@@ -24,7 +24,7 @@ export function BlockStart({ position = [0, 0, 0] }) {
           position={[0.75, 0.65, 0]}
           rotation-y={-0.25}
         >
-          Let's Race!
+          Planet Race
           <meshBasicMaterial toneMapped={false} color="#F9F8F0" />
         </Text>
       </Float>
